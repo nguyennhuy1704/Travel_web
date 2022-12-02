@@ -6,6 +6,8 @@ import React from 'react';
 import styled from 'styled-components';
 import '../components/styles.css';
 import { authenService } from '../service';
+import bgTravel from '../../../../assets/travel_bg.jpg';
+import { BOX_SHADOW } from '@/config/theme';
 
 const LoginPage = () => {
     const [loading, setLoading] = React.useState(false);
@@ -34,12 +36,21 @@ const LoginPage = () => {
     };
 
     return (
-        <div style={{ height: '100%', width: '100%', marginLeft: '16%', marginRight: '16%' }}>
+        <div
+            style={{
+                height: '100vh',
+                width: '100vw',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#fff',
+            }}
+        >
             <LoginFormBlock>
                 <Block>
                     <FormBlock>
                         <div style={{ marginBottom: 40 }}>
-                            <p style={{ fontSize: 25, fontWeight: '700' }}>Công viên địa chất toàn cầu ĐăkNông</p>
+                            <p style={{ fontSize: 25, fontWeight: '700' }}>VIETNAM TRAVEL</p>
                             <div style={{ marginTop: -20 }}>
                                 <p style={{ fontSize: 14, fontWeight: '700', color: 'lightgray' }}>
                                     Chào mừng bạn quay trở lại!
@@ -56,7 +67,7 @@ const LoginPage = () => {
                         >
                             <Form.Item
                                 name="phone"
-                                style={{ marginBottom: 30 }}
+                                style={{ marginBottom: 15 }}
                                 rules={[
                                     // { required: true, message: 'Vui lòng nhập số điện thoại!' },
                                     {
@@ -88,10 +99,7 @@ const LoginPage = () => {
                             </Form.Item> */}
                             <br />
                             <Row justify="center" style={{ position: 'relative' }}>
-                                <Button
-                                    htmlType="submit"
-                                    style={{ width: '92%', background: colors.primary, color: 'white' }}
-                                >
+                                <Button htmlType="submit" type="primary">
                                     Đăng nhập
                                 </Button>
                             </Row>
@@ -99,10 +107,7 @@ const LoginPage = () => {
                     </FormBlock>
                 </Block>
                 <Block>
-                    <img
-                        className="image"
-                        src="https://images.unsplash.com/photo-1494472155656-f34e81b17ddc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8d2F0ZXJmYWxsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                    />
+                    <Image className="image" src={bgTravel} />
                 </Block>
             </LoginFormBlock>
         </div>
@@ -110,20 +115,18 @@ const LoginPage = () => {
 };
 
 const LoginFormBlock = styled.div`
-    width: 100%;
-    height: 800px;
-    border-radius: 8px;
+    border-radius: 16px;
     background-color: white;
-    margin-top: 60px;
     display: flex;
     flex-direction: row;
+    height: 65vh;
+    width: 60vw;
+    box-shadow: ${BOX_SHADOW};
+    padding: 6px;
 `;
 
 const FormBlock = styled.div`
     width: 70%;
-    height: 80%;
-    margin: auto;
-    margin-top: 200px;
 
     .label-block {
         margin-bottom: 40px;
@@ -132,17 +135,16 @@ const FormBlock = styled.div`
 
 const Block = styled.div`
     flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const Image = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 8px;
-
-    .img:hover {
-        filter: grayscale(100%);
-    }
+    border-radius: 20px;
 `;
 
 export default LoginPage;

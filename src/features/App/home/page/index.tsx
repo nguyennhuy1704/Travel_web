@@ -76,13 +76,11 @@ const HomePage = () => {
     return (
         <CustomLoading isLoading={isLoading}>
             <Container
-                header={<PageHeader style={{ borderRadius: 8 }} title="Tổng quan" />}
+                // header={<PageHeader style={{ borderRadius: 8 }} title="Tổng quan" />}
                 contentComponent={
-                    <CustomLoading isLoading={isLoading}>
-                        <Row gutter={12} style={{ minHeight: 700 }}>
-                            {listBlocks.map((item: any, index: number) => renderBlock(item, index))}
-                        </Row>
-                    </CustomLoading>
+                    <div style={{ backgroundColor: 'white', height: '100%' }}>
+                        <Row gutter={12}>{listBlocks.map((item: any, index: number) => renderBlock(item, index))}</Row>
+                    </div>
                 }
             />
         </CustomLoading>
@@ -104,11 +102,11 @@ const ContentBlock = styled.div`
 const ItemBlock = styled.div`
     width: 80%;
     height: 100px;
-    background: white;
     border-radius: 10px;
     display: flex;
     flex-direction: row;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    position: absolute;
 
     .info-block {
         flex: 2;

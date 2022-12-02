@@ -36,7 +36,7 @@ const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: inherit;
-    /* font-family: 'Quicksand', sans-serif; */
+    font-family: 'Quicksand', sans-serif;
   }
 
   .ant-radio-inner:after {

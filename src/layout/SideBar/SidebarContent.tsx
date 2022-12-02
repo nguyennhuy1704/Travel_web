@@ -22,17 +22,8 @@ const SidebarContent = ({
 
     return (
         <>
-            <Row align="middle" justify="center" style={{ height: 120 }}>
-                {!collapsed && (
-                    <Link to="/">
-                        <img
-                            height={80}
-                            width={100}
-                            alt=""
-                            src="https://i0.wp.com/daknonggeopark.com/wp-content/uploads/2021/10/logo-CVDC-Dak-Nong19.5-02.png?w=769&ssl=1"
-                        />
-                    </Link>
-                )}
+            <Row align="middle" justify="start" className="gx-m-0 gx-py-5 gx-ml-4 gx-mb-3">
+                {!collapsed && <Link to="/">Chỗ này là LOGO</Link>}
                 {/* <div className="gx-linebar" onClick={handleCallbackCollapsed}>
                     {collapsed ? (
                         <MenuUnfoldOutlined className="gx-icon-btn" />
