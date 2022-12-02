@@ -1,0 +1,59 @@
+stages:
+    - build
+    - deploy
+
+.build: &build
+    stage: build
+    image: docker:latest
+    services:
+        - docker:dind
+    script:
+        - echo $DOCKER_TOKEN | docker login --username $DOCKER_USERNAME --password-stdin
+        - docker build . -t $DOCKER_USERNAME/daknong-web:$TAG
+        - docker push $DOCKER_USERNAME/daknong-web:$TAG
+
+.deploy: &deploy
+    stage: deploy
+    image: linuxserver/openssh-server:amd64-latest
+    before_script:
+        - eval "$(ssh-agent)"
+        - ssh-add <(echo "$PRIVATE_KEY")
+        - mkdir -p ~/.ssh
+        - echo -e "$SSH_CONFIG" > ~/.ssh/config
+
+# DEVELOP ENVIRONMENT
+develop-build:
+    <<: *build
+    variables:
+        TAG: dev
+    before_script:
+        - echo -e "$DEVELOP_ENV" > .env
+        - cp .env.dev .env
+    only:
+        - develop
+
+develop-deploy:
+    <<: *deploy
+    script:
+        - ssh develop "cd ~/app/daknong && ./deploy.sh web && exit"
+    only:
+        - develop
+
+#PRODUCTION ENVIRONMENT
+prod-build:
+    <<: *build
+    variables:
+        TAG: latest
+    before_script:
+        - echo -e "$PROD_ENV" > .env
+        - cp .env.prod .env
+    only:
+        - master
+
+prod-deploy:
+    <<: *deploy
+    when: manual
+    script:
+        - ssh production "cd ~/app/daknong && ./deploy.sh web && exit"
+    only:
+        - master
