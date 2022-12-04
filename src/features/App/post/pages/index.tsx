@@ -3,6 +3,7 @@ import ButtonAdd from '@/components/Button/ButtonAdd';
 import IconAntd from '@/components/IconAntd';
 import CustomLoading from '@/components/Loading';
 import { openNotificationWithIcon } from '@/components/Notification';
+import TableComponent from '@/components/TableComponents';
 import { routerPage } from '@/config/routes';
 import Container from '@/container/Container';
 import useDebounce from '@/hooks/useDebounce';
@@ -17,23 +18,24 @@ import { newsService } from '../service';
 const PostPage = () => {
     const navigate = useNavigate();
 
-    const columns = [
+    const columns: any = [
         {
-            width: '70px',
+            width: '60px',
             title: <b>STT</b>,
             dataIndex: 'stt',
+            align: 'center',
             render: (text: any, record: any, index: any) => (
                 <td id={record.id}>{(paging.current - 1) * paging.pageSize + index + 1}</td>
             ),
         },
         {
             title: <b>Tiêu đề</b>,
-            width: '35%',
             dataIndex: 'title',
         },
         {
             title: <b>Danh mục</b>,
-            width: '20%',
+            width: '160px',
+            align: 'center',
             dataIndex: 'category',
             render: (value: string[]) => {
                 const finalCategories: any = [];
@@ -42,10 +44,14 @@ const PostPage = () => {
             },
         },
         {
+            width: '160px',
+            align: 'center',
             title: <b>Lượt yêu thích</b>,
             dataIndex: 'loveNumber',
         },
         {
+            width: '160px',
+            align: 'center',
             title: <b>Trạng thái</b>,
             dataIndex: 'status',
             render: (value: number, record: any) => {
@@ -53,6 +59,8 @@ const PostPage = () => {
             },
         },
         {
+            width: '160px',
+            align: 'center',
             title: <b>Ngày tạo</b>,
             dataIndex: 'date',
         },
@@ -235,36 +243,41 @@ const PostPage = () => {
                     />
                 }
                 contentComponent={
-                    <CustomLoading isLoading={isLoading}>
-                        <div>
-                            <p>
-                                Kết quả lọc: <b>{paging.total}</b>
-                            </p>
-                            <Table
-                                bordered
-                                columns={columns}
-                                dataSource={listNews}
-                                scroll={{
-                                    x: 1200,
-                                    y: 520,
-                                    scrollToFirstRowOnChange: true,
-                                }}
-                                locale={{
-                                    emptyText: 'Chưa có bản ghi nào!',
-                                }}
-                                pagination={{
-                                    ...paging,
-                                    showSizeChanger: false,
-                                    onChange: async (page, pageSize) => {
-                                        setParams({ ...params, page });
-                                        const element: any = document.getElementById('top-table');
-                                        element.scrollIntoView({ block: 'start' });
-                                    },
-                                }}
-                            />
-                        </div>
-                    </CustomLoading>
+                    <TableComponent
+                        showTotalResult
+                        columns={columns}
+                        dataSource={listNews}
+                        page={params.page}
+                        total={paging.total}
+                        loading={isLoading}
+                        onChangePage={(_page) => setParams({ ...params, page: _page })}
+                    />
                 }
+                // <CustomLoading isLoading={isLoading}>
+                //     <div>
+                //         <p>
+                //             Kết quả lọc: <b>{paging.total}</b>
+                //         </p>
+                //         <Table
+                //             bordered
+                //             columns={columns}
+                //             dataSource={listNews}
+                //             locale={{
+                //                 emptyText: 'Chưa có bản ghi nào!',
+                //             }}
+                //             className="table-responsive"
+                //             pagination={{
+                //                 ...paging,
+                //                 showSizeChanger: false,
+                //                 onChange: async (page, pageSize) => {
+                //                     setParams({ ...params, page });
+                //                     const element: any = document.getElementById('top-table');
+                //                     element.scrollIntoView({ block: 'start' });
+                //                 },
+                //             }}
+                //         />
+                //     </div>
+                // </CustomLoading>
             />
         </CustomLoading>
     );

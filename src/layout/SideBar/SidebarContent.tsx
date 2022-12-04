@@ -49,6 +49,9 @@ const MenuStyled = styled(Menu)`
     * {
         font-weight: 800;
     }
+    & span.ant-menu-title-content {
+        margin-left: 20px;
+    }
 `;
 
 export default React.memo(SidebarContent);

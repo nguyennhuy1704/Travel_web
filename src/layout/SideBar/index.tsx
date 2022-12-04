@@ -45,8 +45,8 @@ const SideBar = ({
 };
 
 const SiderStyled = styled(Layout.Sider)`
-    background-color: #f6f7ff;
-    border-right: 1.5px solid #e8e8e8;
+    background-color: #def4fc;
+    border-right: 1.5px solid #e3e3e3;
 
     & .ant-menu-vertical .ant-menu-item:after,
     .ant-menu-vertical-left .ant-menu-item:after,
@@ -74,7 +74,7 @@ const SiderStyled = styled(Layout.Sider)`
 
     & ul.ant-menu.ant-menu-root {
         padding: 0 15px;
-        background-color: #f6f7ff;
+        background-color: #def4fc;
     }
 `;
 

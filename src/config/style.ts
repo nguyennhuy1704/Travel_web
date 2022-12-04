@@ -51,7 +51,7 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100vh;
     width: 100vw;
     overflow-x: hidden;
-    font-size: 1.5rem;
+    font-size: 1.6rem !important;
   }
 
 

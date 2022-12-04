@@ -83,7 +83,7 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
                     {/* body content */}
                     <ErrorBoundary>
                         <Content className="gx-layout-content">
-                            <div className="gx-main-content-wrapper" style={{ overflow: 'auto', marginTop: 70 }}>
+                            <div className="gx-main-content-wrapper" style={{ overflow: 'hidden' }}>
                                 <CustomScrollbars>
                                     <PageComponent {...props} />
                                 </CustomScrollbars>
@@ -154,7 +154,7 @@ const WrapperInfoStyled = styled.div`
 `;
 
 const LayoutStyled = styled(Layout)`
-    background-color: #f6f7ff !important;
+    background-color: #def4fc !important;
 `;
 
 export default PageLayout;
