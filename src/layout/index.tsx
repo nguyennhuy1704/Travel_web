@@ -6,7 +6,7 @@ import ErrorBoundary from '@/features/Error/ErrorBoundary';
 import useWindowSize from '@/hooks/useWindowSize';
 import SideBar from '@/layout/SideBar';
 import { wait } from '@/utils';
-import { Dropdown, Layout, Menu, Row, Space } from 'antd';
+import { Dropdown, Layout, Menu, Popover, Row, Space } from 'antd';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -32,27 +32,21 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
         }, []);
 
         const menu = (
-            <Menu
-                style={{ width: 250 }}
-                items={[
-                    {
-                        key: '1',
-                        label: 'Thông tin cá nhân',
-                        icon: <IconAntd icon="UserOutlined" fontSize={16} marginRight={14} />,
-                    },
-                    {
-                        key: '2',
-                        label: 'Đăng xuất',
-                        icon: <IconAntd icon="LogoutOutlined" fontSize={16} marginRight={14} />,
-                        onClick: () => {
+            <div>
+                <ul className="gx-user-popover">
+                    <li>Thông tin cá nhân</li>
+                    <li
+                        onClick={() => {
                             LocalStorage.removeToken();
                             wait(1000).then(() => {
                                 window.location.reload();
                             });
-                        },
-                    },
-                ]}
-            />
+                        }}
+                    >
+                        Đăng xuất
+                    </li>
+                </ul>
+            </div>
         );
 
         return isLogin ? (
@@ -63,12 +57,20 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
                     handleCallbackCollapseMobile={handleCallbackCollapseMobile}
                 />
                 {/* content */}
-                <Layout>
+                <LayoutStyled>
                     {/* top content */}
                     {width < TAB_SIZE && <Topbar handleCallbackCollapseMobile={handleCallbackCollapseMobile} />}
                     <TopBar>
-                        <div style={{ height: 20 }}></div>
-                        <div className="account-block">
+                        <Popover content={menu} placement="bottomRight">
+                            <WrapperInfoStyled>
+                                <strong>Xin chào, {userInfor?.username}</strong>
+                                <ImageAvatarStyled
+                                    src="https://icons.iconarchive.com/icons/iconka/easter-egg-bunny/256/red-angel-icon.png"
+                                    alt="avatar"
+                                />
+                            </WrapperInfoStyled>
+                        </Popover>
+                        {/* <div className="account-block">
                             <Dropdown overlay={menu}>
                                 <a onClick={(e) => e.preventDefault()}>
                                     <Space>
@@ -76,12 +78,12 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
                                     </Space>
                                 </a>
                             </Dropdown>
-                        </div>
+                        </div> */}
                     </TopBar>
                     {/* body content */}
                     <ErrorBoundary>
                         <Content className="gx-layout-content">
-                            <div className="gx-main-content-wrapper" style={{ overflow: 'auto', marginTop: 70 }}>
+                            <div className="gx-main-content-wrapper" style={{ overflow: 'hidden' }}>
                                 <CustomScrollbars>
                                     <PageComponent {...props} />
                                 </CustomScrollbars>
@@ -94,7 +96,7 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
                             </Footer> */}
                         </Content>
                     </ErrorBoundary>
-                </Layout>
+                </LayoutStyled>
             </Layout>
         ) : (
             <Layout className="gx-app-layout">
@@ -111,11 +113,18 @@ const ContainerAuthStyled = styled(Row)`
 `;
 
 const TopBar = styled.div`
-    position: fixed;
+    position: sticky;
     top: 0;
     width: 100%;
     height: 60px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 0 30px;
+
+    strong {
+        color: black;
+    }
 
     .account-block {
         width: 18%;
@@ -124,6 +133,28 @@ const TopBar = styled.div`
         z-index: 3;
         margin: 0 auto;
     }
+`;
+
+const ImageAvatarStyled = styled.img`
+    height: 35px;
+    width: 35px;
+    border-radius: 10px;
+    border: 1px dashed #ccc;
+    padding: 4px;
+    margin-left: 10px;
+`;
+
+const WrapperInfoStyled = styled.div`
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+        opacity: 0.8;
+    }
+`;
+
+const LayoutStyled = styled(Layout)`
+    background-color: #def4fc !important;
 `;
 
 export default PageLayout;

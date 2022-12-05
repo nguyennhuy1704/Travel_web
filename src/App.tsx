@@ -2,6 +2,7 @@ import { Spin } from 'antd';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import LocalStorage from './apis/LocalStorage';
 import GlobalStyle from './config/style';
 import MainPage from './features/MainPage';
 import { getMe, setAppLoading } from './redux/slice/root.slice';
@@ -20,9 +21,11 @@ function App() {
     }, []);
 
     React.useLayoutEffect(() => {
-        (async () => {
-            await dispatch(getMe());
-        })();
+        if (LocalStorage.getToken()) {
+            (async () => {
+                await dispatch(getMe());
+            })();
+        }
         // if (LocalStorage.getToken()) {
         //     authService.info().then((res) => {
         //         setRole(Object.keys(res.data)[0]);

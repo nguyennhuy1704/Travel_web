@@ -1,6 +1,7 @@
 import ButtonAdd from '@/components/Button/ButtonAdd';
 import CustomLoading from '@/components/Loading';
 import { openNotificationWithIcon } from '@/components/Notification';
+import TableComponent from '@/components/TableComponents';
 import { routerPage } from '@/config/routes';
 import Container from '@/container/Container';
 import useDebounce from '@/hooks/useDebounce';
@@ -202,59 +203,88 @@ const TourPage = () => {
                     />
                 }
                 contentComponent={
-                    <CustomLoading isLoading={isLoading}>
-                        <div>
-                            <p>
-                                Kết quả lọc: <b>{paging.total}</b>
-                            </p>
-                            <Table
-                                bordered
-                                expandRowByClick
-                                columns={columns}
-                                dataSource={listTours}
-                                scroll={{
-                                    x: 800,
-                                    scrollToFirstRowOnChange: true,
-                                }}
-                                locale={{
-                                    emptyText: 'Chưa có bản ghi nào!',
-                                }}
-                                expandable={{
-                                    expandedRowRender: (record) => (
-                                        <div>
-                                            <TourDetail
-                                                record={record}
-                                                changeTourStatus={changeTourStatus}
-                                                deleteDestination={deleteDestination}
-                                                getTours={getTours}
-                                                currentTourId={currentTourId}
-                                            />
-                                        </div>
-                                    ),
-                                }}
-                                expandedRowKeys={expandedRowKeys}
-                                onExpand={(expanded: boolean, record: any) => {
-                                    const keys = [];
-                                    if (expanded) {
-                                        keys.push(record.key);
-                                        setCurrentTourId(record.id);
-                                    }
+                    <TableComponent
+                        showTotalResult
+                        columns={columns}
+                        dataSource={listTours}
+                        page={params.page}
+                        total={paging.total}
+                        loading={isLoading}
+                        expandedRowRender={(record) => (
+                            <div>
+                                <TourDetail
+                                    record={record}
+                                    changeTourStatus={changeTourStatus}
+                                    deleteDestination={deleteDestination}
+                                    getTours={getTours}
+                                    currentTourId={currentTourId}
+                                />
+                            </div>
+                        )}
+                        onExpand={(expanded: boolean, record: any) => {
+                            const keys = [];
+                            if (expanded) {
+                                keys.push(record.key);
+                                setCurrentTourId(record.id);
+                            }
 
-                                    setExpandedRowKeys(keys);
-                                }}
-                                pagination={{
-                                    ...paging,
-                                    showSizeChanger: false,
-                                    onChange: async (page, pageSize) => {
-                                        setCurrentPage(page);
-                                        const element: any = document.getElementById('top-table');
-                                        element.scrollIntoView({ block: 'start' });
-                                    },
-                                }}
-                            />
-                        </div>
-                    </CustomLoading>
+                            setExpandedRowKeys(keys);
+                        }}
+                        onChangePage={(_page) => setParams({ ...params, page: _page })}
+                    />
                 }
+                // <CustomLoading isLoading={isLoading}>
+                //     <div>
+                //         <p>
+                //             Kết quả lọc: <b>{paging.total}</b>
+                //         </p>
+                //         <Table
+                //             bordered
+                //             expandRowByClick
+                //             columns={columns}
+                //             dataSource={listTours}
+                //             scroll={{
+                //                 x: 800,
+                //                 scrollToFirstRowOnChange: true,
+                //             }}
+                //             locale={{
+                //                 emptyText: 'Chưa có bản ghi nào!',
+                //             }}
+                //             expandable={{
+                //                 expandedRowRender: (record) => (
+                //                     <div>
+                //                         <TourDetail
+                //                             record={record}
+                //                             changeTourStatus={changeTourStatus}
+                //                             deleteDestination={deleteDestination}
+                //                             getTours={getTours}
+                //                             currentTourId={currentTourId}
+                //                         />
+                //                     </div>
+                //                 ),
+                //             }}
+                //             expandedRowKeys={expandedRowKeys}
+                //             onExpand={(expanded: boolean, record: any) => {
+                //                 const keys = [];
+                //                 if (expanded) {
+                //                     keys.push(record.key);
+                //                     setCurrentTourId(record.id);
+                //                 }
+
+                //                 setExpandedRowKeys(keys);
+                //             }}
+                //             pagination={{
+                //                 ...paging,
+                //                 showSizeChanger: false,
+                //                 onChange: async (page, pageSize) => {
+                //                     setCurrentPage(page);
+                //                     const element: any = document.getElementById('top-table');
+                //                     element.scrollIntoView({ block: 'start' });
+                //                 },
+                //             }}
+                //         />
+                //     </div>
+                // </CustomLoading>
             />
         </CustomLoading>
     );

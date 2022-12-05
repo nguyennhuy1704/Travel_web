@@ -2,11 +2,13 @@ import ButtonAdd from '@/components/Button/ButtonAdd';
 import IconAntd from '@/components/IconAntd';
 import CustomLoading from '@/components/Loading';
 import { openNotificationWithIcon } from '@/components/Notification';
+import TableComponent from '@/components/TableComponents';
 import { routerPage } from '@/config/routes';
 import Container from '@/container/Container';
 import useDebounce from '@/hooks/useDebounce';
 import PageLayout from '@/layout';
 import { PageHeader, Popconfirm, Spin, Switch, Table, Tag } from 'antd';
+import moment from 'moment';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IPaging } from '../../tour/pages';
@@ -44,7 +46,7 @@ interface ICustomer {
 }
 
 const CustomerPage = () => {
-    const columns = [
+    const columns: any = [
         {
             width: '70px',
             title: <b>STT</b>,
@@ -73,10 +75,12 @@ const CustomerPage = () => {
         {
             title: <b>Ngày tạo</b>,
             dataIndex: 'date',
+            // render: (value: any) => moment(value).format('DD/MM/YYYY'),
         },
         {
             title: <b>Trạng thái</b>,
             dataIndex: 'status',
+            align: 'center',
             render: (value: number, record: any) => {
                 return <Switch checked={value === 1} onChange={() => changeStatus(record.id)} />;
             },
@@ -198,7 +202,7 @@ const CustomerPage = () => {
     }, [params]);
 
     return (
-        <CustomLoading isLoading={isLoading}>
+        <>
             <Container
                 header={
                     <PageHeader
@@ -227,39 +231,49 @@ const CustomerPage = () => {
                     />
                 }
                 contentComponent={
-                    <CustomLoading isLoading={isLoading}>
-                        <div>
-                            <p>
-                                Kết quả lọc: <b>{paging.total}</b>
-                            </p>
-                            <Table
-                                bordered
-                                columns={columns}
-                                dataSource={listCustomers}
-                                scroll={{
-                                    x: 1200,
-                                    scrollToFirstRowOnChange: true,
-                                }}
-                                locale={{
-                                    emptyText: 'Chưa có bản ghi nào!',
-                                }}
-                                pagination={{
-                                    ...paging,
-                                    showSizeChanger: false,
-                                    onChange: async (page) => {
-                                        setParams({ ...params, page });
-                                        setCurrentPage(page);
-                                        const element: any = document.getElementById('top-table');
-                                        element.scrollIntoView({ block: 'start' });
-                                    },
-                                }}
-                            />
-                            <AddEditModal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
-                        </div>
-                    </CustomLoading>
+                    <TableComponent
+                        showTotalResult
+                        columns={columns}
+                        dataSource={listCustomers}
+                        page={params.page}
+                        total={paging.total}
+                        loading={isLoading}
+                        onChangePage={(_page) => setParams({ ...params, page: _page })}
+                    />
                 }
+                // <CustomLoading isLoading={isLoading}>
+                //     <div>
+                //         <p>
+                //             Kết quả lọc: <b>{paging.total}</b>
+                //         </p>
+                //         <Table
+                //             bordered
+                //             columns={columns}
+                //             dataSource={listCustomers}
+                //             scroll={{
+                //                 x: 1200,
+                //                 scrollToFirstRowOnChange: true,
+                //             }}
+                //             locale={{
+                //                 emptyText: 'Chưa có bản ghi nào!',
+                //             }}
+                //             pagination={{
+                //                 ...paging,
+                //                 showSizeChanger: false,
+                //                 onChange: async (page) => {
+                //                     setParams({ ...params, page });
+                //                     setCurrentPage(page);
+                //                     const element: any = document.getElementById('top-table');
+                //                     element.scrollIntoView({ block: 'start' });
+                //                 },
+                //             }}
+                //         />
+                //         <AddEditModal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
+                //     </div>
+                // </CustomLoading>
             />
-        </CustomLoading>
+            <AddEditModal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
+        </>
     );
 };
 

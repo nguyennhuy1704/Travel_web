@@ -7,6 +7,12 @@ import { Button, Col, message, PageHeader, Row, Spin } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 import { homeService } from '../service';
+import card1 from '../../../../assets/card1.png';
+import card2 from '../../../../assets/card2.png';
+import card3 from '../../../../assets/card3.png';
+import Chart1 from '../components/Chart1';
+import ChartColumn from '../components/ChartColumn';
+
 const HomePage = () => {
     const [isLoading, setIsLoadng] = React.useState<boolean>(false);
     const [posts, setPosts] = React.useState<number>();
@@ -17,36 +23,40 @@ const HomePage = () => {
             id: 1,
             title: 'Bài viết',
             value: posts,
-            icon: <IconAntd icon="ReadOutlined" fontSize={40} />,
+            icon: card1,
         },
         {
             id: 2,
             title: 'Tour du lịch',
             value: tours,
-            icon: <IconAntd icon="AliwangwangOutlined" fontSize={40} />,
+            icon: card2,
         },
         {
             id: 3,
             title: 'Khách hàng',
             value: customers,
-            icon: <IconAntd icon="TeamOutlined" fontSize={40} />,
+            icon: card3,
         },
     ];
 
     const renderBlock = (item: any, index: number) => {
         return (
             <Col key={index} className="gutter-row" span={8}>
-                <ItemBlock>
-                    <div className="info-block">
-                        <p className="title">{item.title}</p>
-                        <div className="statistic-block">
-                            <p className="statistic">{item.value}</p>
+                <WrapperBlockStyled>
+                    <ItemBlock>
+                        <div className="info-block">
+                            <p className="title">{item.title}</p>
+                            <div className="statistic-block">
+                                <p className="statistic">{item.value}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div className="icon-block">
-                        <div className="icon">{item.icon}</div>
-                    </div>
-                </ItemBlock>
+                        <div className="icon-block">
+                            <div className="icon">
+                                <img src={item.icon} alt="icon" />
+                            </div>
+                        </div>
+                    </ItemBlock>
+                </WrapperBlockStyled>
             </Col>
         );
     };
@@ -74,20 +84,52 @@ const HomePage = () => {
     }, []);
 
     return (
-        <CustomLoading isLoading={isLoading}>
-            <Container
-                header={<PageHeader style={{ borderRadius: 8 }} title="Tổng quan" />}
-                contentComponent={
-                    <CustomLoading isLoading={isLoading}>
-                        <Row gutter={12} style={{ minHeight: 700 }}>
-                            {listBlocks.map((item: any, index: number) => renderBlock(item, index))}
+        <div style={{ backgroundColor: 'transparent', paddingTop: 40 }}>
+            <Row className="gx-mx-5" justify="center" gutter={80}>
+                {listBlocks.map((item: any, index: number) => renderBlock(item, index))}
+            </Row>
+            <div
+                style={{
+                    height: '80vh',
+                    backgroundColor: 'white',
+                    marginTop: '-50px',
+                    padding: '60px 10px 0 10px',
+                }}
+            >
+                <Row style={{ height: '100%' }}>
+                    <Col style={{ height: '100%', padding: '60px 80px 80px 80px' }} span={16}>
+                        <p className="gx-text-center gx-mb-5" style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                            Thống kê khách hàng theo Tour
+                        </p>
+                        <ChartColumn />
+                    </Col>
+                    <Col span={8}>
+                        <Row style={{ height: '100%' }}>
+                            <Col span={24} style={{ display: 'flex', alignItems: 'center' }}>
+                                <div style={{ height: '280px' }}>
+                                    <Chart1 />
+                                </div>
+                            </Col>
+                            <Col span={24} style={{ display: 'flex', alignItems: 'center' }}>
+                                <div style={{ height: '280px' }}>
+                                    <Chart1 />
+                                </div>
+                            </Col>
                         </Row>
-                    </CustomLoading>
-                }
-            />
-        </CustomLoading>
+                    </Col>
+                </Row>
+                {/* content ở đây nè */}
+            </div>
+        </div>
     );
 };
+
+const WrapperBlockStyled = styled.div`
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+`;
 
 const ContentBlock = styled.div`
     width: 100%;
@@ -102,25 +144,25 @@ const ContentBlock = styled.div`
 `;
 
 const ItemBlock = styled.div`
-    width: 80%;
-    height: 100px;
-    background: white;
-    border-radius: 10px;
+    height: 120px;
     display: flex;
     flex-direction: row;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    z-index: 9999999;
 
     .info-block {
         flex: 2;
         padding: 20px;
 
         .title {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 700;
         }
 
         .statistic-block {
-            margin-top: -14px;
+            margin-top: -6px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff6b6b;
         }
     }
 
@@ -129,12 +171,23 @@ const ItemBlock = styled.div`
         position: relative;
 
         .icon {
-            margin: auto;
-            width: 40px;
-            height: 40px;
+            width: 130px;
+            height: 130px;
             position: absolute;
-            top: 25%;
+            right: 10px;
+            top: 61%;
+            transform: translateY(-50%);
         }
+    }
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x;
+
+    .ocean {
+        height: 5%;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background: #015871;
     }
 `;
 

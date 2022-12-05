@@ -2,6 +2,7 @@ import ButtonAdd from '@/components/Button/ButtonAdd';
 import IconAntd from '@/components/IconAntd';
 import CustomLoading from '@/components/Loading';
 import { openNotificationWithIcon } from '@/components/Notification';
+import TableComponent from '@/components/TableComponents';
 import Container from '@/container/Container';
 import useDebounce from '@/hooks/useDebounce';
 import { message, Modal, PageHeader, Popconfirm, Spin, Switch, Table } from 'antd';
@@ -235,9 +236,8 @@ const AccountPage = () => {
                     />
                 }
                 contentComponent={
-                    <Spin spinning={isLoading}>
-                        <div>
-                            <p>
+                    <div>
+                        {/* <p>
                                 Kết quả lọc: <b>{paging.total}</b>
                             </p>
                             <Table
@@ -261,30 +261,38 @@ const AccountPage = () => {
                                         element.scrollIntoView({ block: 'start' });
                                     },
                                 }}
+                            /> */}
+                        <TableComponent
+                            showTotalResult
+                            columns={columns}
+                            dataSource={listAccounts}
+                            page={params.page}
+                            total={paging.total}
+                            loading={isLoading}
+                            onChangePage={(_page) => setParams({ ...params, page: _page })}
+                        />
+                        {isOpenModal && (
+                            <AddEditModal
+                                getListAccounts={getListAccounts}
+                                isOpenModal={isOpenModal}
+                                setIsOpenModal={setIsOpenModal}
+                                currentId={currentId}
+                                setCurrentId={setCurrentId}
                             />
-                            {isOpenModal && (
-                                <AddEditModal
-                                    getListAccounts={getListAccounts}
-                                    isOpenModal={isOpenModal}
-                                    setIsOpenModal={setIsOpenModal}
-                                    currentId={currentId}
-                                    setCurrentId={setCurrentId}
-                                />
-                            )}
-                            {isOpenConfirmModal && (
-                                <Modal
-                                    title="Đặt lại mật khẩu"
-                                    open={isOpenConfirmModal}
-                                    onOk={() => {}}
-                                    onCancel={() => setIsOpenConfirmModal(false)}
-                                    okText="Đặt lại"
-                                    cancelText="Đóng"
-                                >
-                                    <p>Bạn có chắc chắn muốn reset lại mật khẩu của tài khoản này?</p>
-                                </Modal>
-                            )}
-                        </div>
-                    </Spin>
+                        )}
+                        {isOpenConfirmModal && (
+                            <Modal
+                                title="Đặt lại mật khẩu"
+                                open={isOpenConfirmModal}
+                                onOk={() => {}}
+                                onCancel={() => setIsOpenConfirmModal(false)}
+                                okText="Đặt lại"
+                                cancelText="Đóng"
+                            >
+                                <p>Bạn có chắc chắn muốn reset lại mật khẩu của tài khoản này?</p>
+                            </Modal>
+                        )}
+                    </div>
                 }
             />
         </CustomLoading>

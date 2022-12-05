@@ -24,10 +24,10 @@ const Filter = (props: IFilter) => {
 
     return (
         <Row gutter={[16, 16]}>
-            <Col span={6}>
+            <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
                 <Input.Search
                     allowClear
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', margin: 0 }}
                     placeholder="Tiều đề bài viết"
                     addonAfter={<Icon type="close-circle-o" />}
                     value={search}
@@ -36,7 +36,7 @@ const Filter = (props: IFilter) => {
                     }}
                 />
             </Col>
-            <Col span={6}>
+            <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
                 <Select
                     style={{ width: '100%' }}
                     placeholder="Chọn danh mục"
@@ -56,7 +56,7 @@ const Filter = (props: IFilter) => {
                     ))}
                 </Select>
             </Col>
-            <Col span={6}>
+            <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
                 <Select
                     style={{ width: '100%' }}
                     allowClear
@@ -73,7 +73,7 @@ const Filter = (props: IFilter) => {
                     <Select.Option value={0}>Ngừng hoạt động</Select.Option>
                 </Select>
             </Col>
-            <Col span={6}>
+            <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
                 <DatePicker.RangePicker
                     style={{ width: '100%' }}
                     format={'DD/MM/YYYY'}
