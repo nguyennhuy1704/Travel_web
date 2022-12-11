@@ -97,21 +97,21 @@ const HomePage = () => {
                 }}
             >
                 <Row style={{ height: '100%' }}>
-                    <Col style={{ height: '100%', padding: '60px 80px 80px 80px' }} span={16}>
+                    <Col style={{ height: '100%', padding: '60px 20px 100px 80px' }} span={14}>
                         <p className="gx-text-center gx-mb-5" style={{ fontSize: '20px', fontWeight: 'bold' }}>
                             Thống kê khách hàng theo Tour
                         </p>
                         <ChartColumn />
                     </Col>
-                    <Col span={8}>
+                    <Col span={10}>
                         <Row style={{ height: '100%' }}>
-                            <Col span={24} style={{ display: 'flex', alignItems: 'center' }}>
-                                <div style={{ height: '280px' }}>
+                            <Col span={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'start' }}>
+                                <div style={{ height: '200px' }}>
                                     <Chart1 />
                                 </div>
                             </Col>
-                            <Col span={24} style={{ display: 'flex', alignItems: 'center' }}>
-                                <div style={{ height: '280px' }}>
+                            <Col span={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'start' }}>
+                                <div style={{ height: '200px' }}>
                                     <Chart1 />
                                 </div>
                             </Col>
