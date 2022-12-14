@@ -1,7 +1,8 @@
 import { Notification } from '@/utils';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import LocalStorage from './LocalStorage';
-const REACT_APP_API_URL = 'http://dev.daknongapi.winds.vn/api/web'
+// const REACT_APP_API_URL = 'http://dev.daknongapi.winds.vn/api/web'
+const REACT_APP_API_URL = 'http://localhost:5005/api/v2'
 
 
 const AxiosClient = axios.create({

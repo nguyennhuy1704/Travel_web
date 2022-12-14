@@ -13,6 +13,7 @@ import ManagePost from '@/features/App/library/pages/ManagePost';
 import AddEditCategory from '@/features/App/library/pages/AddEditCategory';
 import OrdersPage from '@/features/App/orders';
 import FeedbackPage from '@/features/App/feedback';
+import CategoryPage from '@/features/App/category';
 
 // định nghĩa router
 export const routerPage = {
@@ -33,6 +34,9 @@ export const routerPage = {
 
     // đơn hàng
     orders: '/orders',
+
+    //danh mục
+    category: '/category',
 
     // phản hồi dịch vụ
     feedback: '/feedback',
@@ -101,6 +105,13 @@ const PrivateRoutes = [
         path: routerPage.feedback,
         element: <FeedbackPage />,
     },
+
+    // category
+    {
+        path: routerPage.category,
+        element: <CategoryPage />,
+    },
+
     ...PublicRoutes,
 ];
 

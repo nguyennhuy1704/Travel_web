@@ -8,10 +8,16 @@ export const items: any = [
         icon: <IconAntd icon="HomeOutlined" />,
     },
     {
+        label: 'Danh mục',
+        key: 'category',
+        icon: <IconAntd icon="ProfileOutlined" />,
+    },
+    {
         label: 'Bài viết',
         key: 'posts',
         icon: <IconAntd icon="ReadOutlined" />,
     },
+
     {
         label: 'Quản lý tour',
         key: 'tours',

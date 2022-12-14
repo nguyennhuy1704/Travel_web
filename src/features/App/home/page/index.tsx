@@ -96,7 +96,7 @@ const HomePage = () => {
                     padding: '60px 10px 0 10px',
                 }}
             >
-                <Row style={{ height: '100%' }}>
+                {/* <Row style={{ height: '100%' }}>
                     <Col style={{ height: '100%', padding: '60px 20px 100px 80px' }} span={14}>
                         <p className="gx-text-center gx-mb-5" style={{ fontSize: '20px', fontWeight: 'bold' }}>
                             Thống kê khách hàng theo Tour
@@ -117,7 +117,7 @@ const HomePage = () => {
                             </Col>
                         </Row>
                     </Col>
-                </Row>
+                </Row> */}
                 {/* content ở đây nè */}
             </div>
         </div>
