@@ -26,7 +26,7 @@ const Topbar = ({ handleCallbackCollapseMobile }: { handleCallbackCollapseMobile
                     label: 'Đăng xuất',
                     icon: <IconAntd icon="LogoutOutlined" fontSize={16} marginRight={14} />,
                     onClick: () => {
-                        LocalStorage.removeToken();
+                        LocalStorage.removeLogged();
                         wait(1000).then(() => {
                             window.location.reload();
                         });
@@ -60,7 +60,7 @@ const Topbar = ({ handleCallbackCollapseMobile }: { handleCallbackCollapseMobile
                         <Dropdown overlay={menu}>
                             <a onClick={(e) => e.preventDefault()}>
                                 <Space>
-                                    <IconAntd icon="UserOutlined" /> {userInfor?.username}
+                                    <IconAntd icon="UserOutlined" /> {userInfor?.Username}
                                 </Space>
                             </a>
                         </Dropdown>

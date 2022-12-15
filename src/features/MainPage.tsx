@@ -10,7 +10,7 @@ const MainPage = ({ role }: { role: string }) => {
     const { pathname } = useLocation();
 
     // chỗ này để cấu hình route cho từng role
-    let element = useRoutes(LocalStorage.getToken() ? (role === 'admin' ? PrivateRoutes : AuthRoutes) : AuthRoutes);
+    let element = useRoutes(LocalStorage.getLogged() ? PrivateRoutes : AuthRoutes);
 
     const [logged, setLogged] = React.useState(false);
 
@@ -20,7 +20,7 @@ const MainPage = ({ role }: { role: string }) => {
         // nếu đăng nhập và domain không webview và domain không public
         // if (LocalStorage.getToken() && pathname.includes('webview') && pathname.includes('public')) {
 
-        if (LocalStorage.getToken()) {
+        if (LocalStorage.getLogged()) {
             setLogged(true);
 
             if (pathname === routerPage.register || pathname === routerPage.login) {

@@ -26,7 +26,7 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
         }, [collapsedMobile]);
 
         React.useLayoutEffect(() => {
-            if (localStorage.getItem('token')) {
+            if (LocalStorage.getLogged()) {
                 setIsLogin(true);
             }
         }, []);
@@ -37,7 +37,7 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
                     <li>Thông tin cá nhân</li>
                     <li
                         onClick={() => {
-                            LocalStorage.removeToken();
+                            LocalStorage.removeLogged();
                             wait(1000).then(() => {
                                 window.location.reload();
                             });
@@ -63,7 +63,7 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
                     <TopBar>
                         <Popover content={menu} placement="bottomRight">
                             <WrapperInfoStyled>
-                                <strong>Xin chào, {userInfor?.username}</strong>
+                                <strong>Xin chào, {userInfor?.Username}</strong>
                                 <ImageAvatarStyled
                                     src="https://icons.iconarchive.com/icons/iconka/easter-egg-bunny/256/red-angel-icon.png"
                                     alt="avatar"
