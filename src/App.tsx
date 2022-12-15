@@ -21,7 +21,7 @@ function App() {
     }, []);
 
     React.useLayoutEffect(() => {
-        if (LocalStorage.getToken()) {
+        if (LocalStorage.getLogged()) {
             (async () => {
                 await dispatch(getMe());
             })();

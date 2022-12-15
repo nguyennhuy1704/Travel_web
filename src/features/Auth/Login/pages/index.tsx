@@ -20,9 +20,10 @@ const LoginPage = () => {
                 phone: values.phone,
                 password: values.password,
             };
-            const res = await authenService.login(payload);
+            const res: any = await authenService.login(payload);
             if (res?.status) {
-                LocalStorage.setToken(`${res?.data?.token}`);
+                // LocalStorage.setToken(`${res?.data?.token}`);
+                LocalStorage.setLogged(res?.user?.id);
 
                 wait(100).then(() => {
                     window.location.reload();

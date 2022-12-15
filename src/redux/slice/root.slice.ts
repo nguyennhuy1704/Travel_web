@@ -1,17 +1,18 @@
 import AxiosClient from '@/apis/AxiosClient';
+import LocalStorage from '@/apis/LocalStorage';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getMe: any = createAsyncThunk('user/getMe', async (params, thunkAPI) => {
-    if(!localStorage.getItem('token')) return
-    const currentUser = await AxiosClient.get('/Authentication/GetUserInfo');
-    return currentUser?.data;
+    if (!LocalStorage.getLogged()) return;
+    const currentUser: any = await AxiosClient.get('/me');
+    return currentUser?.user;
 });
 
 const rootSlice = createSlice({
     name: 'user',
     initialState: {
         appLoading: true,
-        user: null
+        user: null,
     },
     reducers: {
         setAppLoading: (state) => {

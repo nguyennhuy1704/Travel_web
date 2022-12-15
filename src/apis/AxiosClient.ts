@@ -2,8 +2,7 @@ import { Notification } from '@/utils';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import LocalStorage from './LocalStorage';
 // const REACT_APP_API_URL = 'http://dev.daknongapi.winds.vn/api/web'
-const REACT_APP_API_URL = 'http://localhost:5005/api/v2'
-
+const REACT_APP_API_URL = 'http://localhost:5005/api/v2';
 
 const AxiosClient = axios.create({
     baseURL: REACT_APP_API_URL,
@@ -14,11 +13,11 @@ const AxiosClient = axios.create({
 
 // handle request to convert all api requests to snake_case
 AxiosClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
-    const token = LocalStorage.getToken();
+    const token = LocalStorage.getLogged();
 
     const newConfig = { ...config };
     if (token && newConfig.headers) {
-        newConfig.headers.Authorization = `Bearer ${token}`;
+        newConfig.headers.auth_id = `${token}`;
     }
 
     if (newConfig.headers && newConfig.headers['Content-Type'] === 'multipart/form-data') return newConfig;
