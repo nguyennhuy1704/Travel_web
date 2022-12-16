@@ -67,7 +67,7 @@ const CategoryPage = () => {
                     <Input.Search
                         allowClear
                         style={{ width: '360px', margin: 0 }}
-                        placeholder="Tiều đề bài viết"
+                        placeholder="Tên danh mục"
                         addonAfter={<Icon type="close-circle-o" />}
                         // value={search}
                         // onChange={(e: any) => {
