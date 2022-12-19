@@ -7,6 +7,7 @@ import Container from '@/container/Container';
 import useDebounce from '@/hooks/useDebounce';
 
 import { PageHeader, Spin, Table, Tag } from 'antd';
+import moment from 'moment';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Filter from '../components/Filter';
@@ -61,23 +62,23 @@ const TourPage = () => {
         },
         {
             title: <b>Mã tour</b>,
-            dataIndex: 'tourName',
+            dataIndex: 'Code',
         },
         {
             title: <b>Tên tour du lịch</b>,
-            dataIndex: 'tourName',
+            dataIndex: 'Title',
         },
         {
             title: <b>Giá tour</b>,
-            dataIndex: 'tourName',
+            dataIndex: 'TourPrice',
         },
         {
             title: <b>Ngày khởi hành</b>,
-            dataIndex: 'tourName',
+            dataIndex: 'DateStartTour',
         },
         {
             title: <b>Lượt đánh giá</b>,
-            dataIndex: 'tourName',
+            dataIndex: 'DateStartTour',
         },
         {
             title: <b>Trạng thái</b>,
@@ -90,27 +91,17 @@ const TourPage = () => {
         },
         {
             title: <b>Ngày tạo</b>,
-            dataIndex: 'date',
+            dataIndex: 'CreatedDate',
+            render: (value: any) => moment(value).format('DD/MM/YYYY'),
         },
     ];
 
     const getTours = async () => {
         try {
             setIsLoading(true);
-            const res = await tourService.getTours(params);
-            if (res.status) {
-                const data = res?.data?.data?.map((item: any) => {
-                    return {
-                        id: item.id,
-                        key: item.id,
-                        tourName: item.name,
-                        numberDestination: item.numberDestinations,
-                        status: item.status,
-                        date: item.createDate,
-                        imageUrl: item.imageUrl,
-                        description: item.description,
-                    };
-                });
+            const res: any = await tourService.getTours(params);
+            if (res?.data) {
+                const data = res?.data;
                 setListTours(data);
             }
             setPaging({
@@ -173,6 +164,7 @@ const TourPage = () => {
             page: currentPage,
         });
     }, [searchDebounce, status, fromDate, toDate, currentPage]);
+
     return (
         <CustomLoading isLoading={isLoading}>
             <Container
