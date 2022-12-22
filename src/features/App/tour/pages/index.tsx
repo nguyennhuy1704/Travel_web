@@ -5,6 +5,7 @@ import TableComponent from '@/components/TableComponents';
 import { routerPage } from '@/config/routes';
 import Container from '@/container/Container';
 import useDebounce from '@/hooks/useDebounce';
+import { currencyFormat } from '@/utils';
 
 import { PageHeader, Spin, Table, Tag } from 'antd';
 import moment from 'moment';
@@ -28,6 +29,58 @@ interface ITour {
     image: string;
     description: string;
 }
+
+const columns: any = [
+    {
+        width: '60px',
+        title: <b>STT</b>,
+        align: 'center',
+        render: (text: any, record: any, index: any) => index + 1,
+    },
+    {
+        title: <b>Mã tour</b>,
+        align: 'center',
+        dataIndex: 'Code',
+    },
+    {
+        title: <b>Tên tour du lịch</b>,
+        dataIndex: 'Title',
+    },
+    {
+        title: <b>Giá tour</b>,
+        dataIndex: 'TourPrice',
+        align: 'center',
+        render: (value: number) => currencyFormat(value),
+    },
+    {
+        title: <b>Ngày khởi hành</b>,
+        align: 'center',
+        dataIndex: 'DateStartTour',
+    },
+    {
+        title: <b>Lượt đánh giá</b>,
+        align: 'center',
+        dataIndex: 'feedbacks',
+        render: (value: any) => value?.length,
+    },
+    {
+        title: <b>Trạng thái</b>,
+        dataIndex: 'status',
+        align: 'center',
+        render: (value: number) => {
+            if (value === 1) {
+                return <Tag color="green">Hoạt động</Tag>;
+            } else return <Tag color="red">Ngừng hoạt động</Tag>;
+        },
+    },
+    {
+        title: <b>Ngày tạo</b>,
+        align: 'center',
+
+        dataIndex: 'CreatedDate',
+        render: (value: any) => moment(value).format('DD/MM/YYYY'),
+    },
+];
 
 const TourPage = () => {
     const navigate = useNavigate();
@@ -53,48 +106,6 @@ const TourPage = () => {
         current: 1,
         pageSize: 12,
     });
-
-    const columns = [
-        {
-            width: '70px',
-            title: <b>STT</b>,
-            render: (text: any, record: any, index: any) => <td id={record.id}>{index + 1}</td>,
-        },
-        {
-            title: <b>Mã tour</b>,
-            dataIndex: 'Code',
-        },
-        {
-            title: <b>Tên tour du lịch</b>,
-            dataIndex: 'Title',
-        },
-        {
-            title: <b>Giá tour</b>,
-            dataIndex: 'TourPrice',
-        },
-        {
-            title: <b>Ngày khởi hành</b>,
-            dataIndex: 'DateStartTour',
-        },
-        {
-            title: <b>Lượt đánh giá</b>,
-            dataIndex: 'DateStartTour',
-        },
-        {
-            title: <b>Trạng thái</b>,
-            dataIndex: 'status',
-            render: (value: number) => {
-                if (value === 1) {
-                    return <Tag color="green">Hoạt động</Tag>;
-                } else return <Tag color="red">Ngừng hoạt động</Tag>;
-            },
-        },
-        {
-            title: <b>Ngày tạo</b>,
-            dataIndex: 'CreatedDate',
-            render: (value: any) => moment(value).format('DD/MM/YYYY'),
-        },
-    ];
 
     const getTours = async () => {
         try {
